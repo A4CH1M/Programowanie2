@@ -1,0 +1,271 @@
+// wyklad_1.cpp
+
+#include <iostream> // w jêsyku C odpowiednikiem jest #include <stdio.h>
+					// tu mo¿na znaleœæ printf()
+#include <locale>
+//#include <cstdio> // nie jest sk³adow¹ biblioteki standardowej jêzyka C++ 
+					// u¿ywamy tu scanf_s()
+#include<cstdlib>   // zamiast <cstdio>, poniewa¿ ta biblioteka zawiera ona <cstdio>
+
+
+struct Osoba {
+	size_t pesel;
+	size_t rocznik;
+	char godnosc[100];
+};
+// I.1. Oznaczenie std:: u¿ywamy na razie formalnie, wyjaœnienie póŸniej
+void temat_1() {
+	Osoba _Osoba;
+	_Osoba.pesel = 1001344;
+	// funkcja jêzyka C wyœwietlenie z formatowaniem
+	std::printf("pesel osoby = %d \n", _Osoba.pesel);
+	printf("pesel osoby = %d \n", _Osoba.pesel);
+}
+// I.2. Wyœwietlenie bez u¿ycia formatowania zasobamy jêzyka C++
+void temat_2() {
+	Osoba _Osoba;
+	_Osoba.pesel = 1001344;
+	// u¿ycie obiektu "cout" jêzyka C++ do celów wyœwietlania
+	std::cout << _Osoba.pesel;
+}
+// I.3. Wprowadzenie danych w stylu jêzyka C
+void temat_3() {
+	Osoba _Osoba;
+	_Osoba.pesel = 1001344;
+	// u¿ycie obiektu "cout" jêzyka C++ do celów wyœwietlania
+	std::cout << "WprowadŸ godnoœæ : ";
+	scanf_s("%s", _Osoba.godnosc, 100); // nie mo¿e byæ spacji
+	std::cout << std::endl << "Godnoœæ osoby : " << _Osoba.godnosc;
+}
+// I.4. Wprowadzenie danych w stylu jêzyka C++
+void temat_4() {
+	setlocale(LC_CTYPE, "Polish");
+	Osoba _Osoba;
+	_Osoba.pesel = 1001344;
+	// u¿ycie obiektu "cout" jêzyka C++ do celów wyœwietlania
+	std::cout << "WprowadŸ numer PESEL : ";
+	std::cin >> _Osoba.pesel;
+	std::cout << "WprowadŸ godnoœæ : ";
+	std::cin >> _Osoba.godnosc; // Tak samo jak w C, nie mo¿e byæ spacji
+	std::cout << std::endl << "Godnoœæ osoby : " << _Osoba.godnosc;
+}
+// I.5. Argumenty funkcji, w stylu jêzyka C (u¿ycie wskaŸnika)
+void print(Osoba _Osoba) {
+	std::cout << std::endl << "Godnoœæ osoby : " << _Osoba.godnosc;
+	std::cout << std::endl << "PESEL         : " << _Osoba.pesel;
+}
+void wprowadz(Osoba* _Osoba) {
+	_Osoba->pesel = 1001344;
+	// u¿ycie obiektu "cout" jêzyka C++ do celów wyœwietlania
+	std::cout << "WprowadŸ numer PESEL : ";
+	std::cin >> _Osoba->pesel;
+	std::cout << "WprowadŸ godnoœæ : ";
+	std::cin >> _Osoba->godnosc; // Tak samo jak w C, nie mo¿e byæ spacji
+}
+void temat_5() {
+	setlocale(LC_CTYPE, "Polish");
+	Osoba osoba;
+	wprowadz(&osoba);
+	print(osoba);
+}
+// I.6. Argumenty funkcji, w stylu jêzyka C++ (u¿ycie &, REFERENCJI)
+//      Funkcje prze³adowane (przeci¹¿one), wprowadŸ() oraz print()
+void print(Osoba* _Osoba) {
+	std::cout << std::endl << "Godnoœæ osoby : " << _Osoba->godnosc;
+	std::cout << std::endl << "PESEL         : " << _Osoba->pesel;
+}
+void wprowadz(Osoba& _Osoba) {
+	_Osoba.pesel = 1001344;
+	std::cout << "WprowadŸ numer PESEL : ";
+	std::cin >> _Osoba.pesel;
+	std::cout << "WprowadŸ godnoœæ : ";
+	std::cin >> _Osoba.godnosc; // Tak samo jak w C, nie mo¿e byæ spacji
+}
+void temat_6() {
+	setlocale(LC_CTYPE, "Polish");
+	Osoba osoba;
+	wprowadz(osoba);
+	print(&osoba);
+}
+//===========================================================================
+// I.7.1. Pamiêæ dynamiczna (nizki posiom); odpowiednik malloc() w jêzyku C
+//        TWORZENIE POJEDYNCZEGO OBIEKTU
+void stworz(Osoba** osoba) {
+	Osoba* temp = (Osoba*)malloc(sizeof(Osoba));
+	*osoba = temp;
+}
+void usun(Osoba** osoba) {
+	free(*osoba);
+	*osoba = NULL;
+}
+void temat_7_1() { // program w stylu C
+	setlocale(LC_CTYPE, "Polish");
+	Osoba *osoba;
+	stworz(&osoba);
+	wprowadz(osoba);
+	print(osoba);
+	usun(&osoba);
+}
+void stworz(Osoba*& osoba) {
+	osoba = new Osoba;
+}
+void usun(Osoba*& osoba) {
+	delete osoba;
+	osoba = nullptr;
+}
+void temat_7_2() { // program w stylu C++
+	setlocale(LC_CTYPE, "Polish");
+	Osoba* osoba;
+	stworz(osoba);
+	wprowadz(osoba);
+	print(osoba);
+	usun(osoba);
+}
+void temat_7() {
+	//temat_7_1();
+	temat_7_2();
+}
+//===========================================================================
+// I.8. Pamiêæ dynamiczna (nizki posiom). 
+//---------------------------------------------------------------------------
+// I.8.1. TWORZENIE TABLICY OBIEKTÓW
+//---------------------------------------------------------------------------
+void stworz(Osoba*& osoba, const size_t rozmiar) {
+	osoba = new Osoba[rozmiar];
+}
+void usun(Osoba*& osoba, const size_t rozmiar) {
+	delete[] osoba;
+	osoba = nullptr;
+}
+void ini(Osoba* osoby, const size_t rozmiar) {
+	int max = 1000;
+	int rocznik = 30;
+	char string_buf[100];
+	for (size_t ind = 0; ind < rozmiar; ind++) {
+		char nazwisko[100];
+		osoby[ind].pesel = rand() % max + 10000;
+		osoby[ind].rocznik = rand() % rocznik + 20;
+		sprintf_s(string_buf, "%d", ind);
+		strcpy_s(nazwisko, "Kowalski");
+		strcat_s(nazwisko, string_buf);
+		strcpy_s(osoby[ind].godnosc, nazwisko);
+	}
+}
+void print(Osoba* osoby, const size_t rozmiar) {
+	std::cout << "<======= Osoby =======>" << std::endl;
+	for (size_t ind = 0; ind < rozmiar; ind++) {
+		std::cout << osoby[ind].pesel << "\t" << osoby[ind].godnosc
+			<< "\t" << osoby[ind].rocznik << std::endl;
+	}
+}
+void temat_8_1() {
+	setlocale(LC_CTYPE, "Polish");
+	srand(time(0));
+	const size_t rozmiar = 10;
+	Osoba* osoby;
+	stworz(osoby, rozmiar);
+	ini(osoby, rozmiar);
+	print(osoby, rozmiar);
+	usun(osoby, rozmiar);
+}
+//---------------------------------------------------------------------------
+// I.8.2. TWORZENIE TABLICY WSKANIKÓW OBIEKTÓW
+//---------------------------------------------------------------------------
+void stworz(Osoba**& osoby, const size_t rozmiar) {
+	osoby = new Osoba*[rozmiar];
+	for (size_t ind = 0; ind < rozmiar; ind++)
+		osoby[ind] = new Osoba;
+}
+void usun(Osoba**& osoby, size_t& rozmiar) {
+	for (size_t ind = 0; ind < rozmiar; ind++)
+		delete osoby[ind];
+	delete[] osoby;
+	osoby = nullptr;
+	rozmiar = 0;
+}
+void print(Osoba** osoby, const size_t rozmiar) {
+	std::cout << "<======= Osoby =======>" << std::endl;
+	for (size_t ind = 0; ind < rozmiar; ind++) {
+		std::cout << osoby[ind]->pesel << "\t" << osoby[ind]->godnosc << "\t"
+			<< osoby[ind]->rocznik << std::endl;
+	}
+}
+void ini(Osoba** osoby, const size_t rozmiar) {
+	int max = 1000;
+	int rocznik = 30;
+	char string_buf[100];
+	for (size_t ind = 0; ind < rozmiar; ind++) {
+		char nazwisko[100];
+		osoby[ind]->pesel = rand() % max + 10000;
+		osoby[ind]->rocznik = rand() % rocznik + 20;
+		sprintf_s(string_buf, "%d", ind);
+		strcpy_s(nazwisko, "Kowalski");
+		strcat_s(nazwisko, string_buf);
+		strcpy_s(osoby[ind]->godnosc, nazwisko);
+	}
+}
+void dodaj(Osoba**& kartoteka, size_t& size) {
+	Osoba** temp = new Osoba *[size + 1];
+	if (size == 0) {
+		temp[size] = new Osoba;
+	}
+	else {
+		for (size_t i = 0; i < size; ++i)
+			temp[i] = kartoteka[i];
+		temp[size] = new Osoba;
+		delete[] kartoteka;
+	}
+	kartoteka = temp;
+	++size;
+}
+void usun(Osoba**& kartoteka, size_t& size, size_t index) {
+	if (index < size) {
+		Osoba** temp = new Osoba *[size - 1];
+		short int j{ -1 };
+		for (size_t i = 0; i < size; ++i)
+			if (i != index) {
+				++j;
+				temp[j] = kartoteka[i];
+			}
+		delete[] kartoteka;
+		kartoteka = temp;
+		--size;
+	}
+	else
+		std::cout << "ERROR: Index jest nieprawid³owy ! " << std::endl;
+}
+void temat_8_2() {
+	setlocale(LC_CTYPE, "Polish");
+	srand(time(0));
+	size_t rozmiar = 10;
+	Osoba** osoby;
+	stworz(osoby, rozmiar);
+	ini(osoby, rozmiar);
+	print(osoby, rozmiar);
+	size_t index = 0;
+	usun(osoby, rozmiar, index);
+	print(osoby, rozmiar);
+	index = 1;
+	usun(osoby, rozmiar, index);
+	print(osoby, rozmiar);
+	dodaj(osoby, rozmiar);
+	dodaj(osoby, rozmiar);
+	usun(osoby, rozmiar);
+	if (osoby == nullptr)
+		std::cout << "Tablica jest pusta !  " << std::endl;
+}
+void temat_8() {
+	//temat_8_1();
+	temat_8_2();
+}
+
+int main() {
+	// temat_1();
+	// temat_2();
+	// temat_3();
+	// temat_4();
+	// temat_5();
+	// temat_6();
+	// temat_7();
+	temat_8();
+}

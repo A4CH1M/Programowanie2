@@ -1,0 +1,6 @@
+﻿  employee_c.cpp
+c:\users\usr\source\repos\programowanie2\semestralprojectexercise6\employee_c.cpp(133): warning C4244: "argument": konwersja z "double" do "float", możliwa utrata danych
+c:\users\usr\source\repos\programowanie2\semestralprojectexercise6\employee_c.cpp(148): warning C4244: "argument": konwersja z "double" do "float", możliwa utrata danych
+c:\users\usr\source\repos\programowanie2\semestralprojectexercise6\employee_c.cpp(163): warning C4244: "argument": konwersja z "double" do "float", możliwa utrata danych
+c:\users\usr\source\repos\programowanie2\semestralprojectexercise6\employee_c.cpp(54): warning C4715: "Employee::operator=”: niewszystkie ścieżki kodu zwracają wartość
+  SemestralProjectExercise6.vcxproj -> C:\Users\Usr\source\repos\Programowanie2\x64\Debug\SemestralProjectExercise6.exe

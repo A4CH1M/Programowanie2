@@ -1,0 +1,3 @@
+﻿  client_c.cpp
+c:\users\usr\source\repos\programowanie2\semestralprojectexercise7\client_c.cpp(116): warning C4715: "Client::operator=”: niewszystkie ścieżki kodu zwracają wartość
+  SemestralProjectExercise7.vcxproj -> C:\Users\Usr\source\repos\Programowanie2\x64\Debug\SemestralProjectExercise7.exe

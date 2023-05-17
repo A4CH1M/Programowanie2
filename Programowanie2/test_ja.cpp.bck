@@ -1,0 +1,88 @@
+#include <iostream>
+using namespace std;
+
+struct Client {
+	string name;
+	string address;
+
+};
+
+void createClient(Client client);
+void createClient(Client* client);
+void createClient(Client* clientTable, size_t tableSize);
+void createClient(Client** client);
+void createClient(Client** clientTable, size_t tableSize);
+
+//void deleteClient();
+
+void printClientInfo(Client client);
+
+int main() {
+	Client myClient;
+	Client* clientPtr;
+	Client** ClientPptr;
+	Client clientArr[10];
+	Client clientArr2[10][10];
+
+	int choice;
+	bool exit = false;
+	char exitChoice;
+
+	do {
+		cout << "Menu:" << endl;
+		cout << "1. Add new client" << endl;
+		cout << "2. Show client" << endl;
+		cout << "Choice: ";
+		cin >> choice;
+		switch (choice) {
+		case 1:
+			createClient(&myClient);
+			createClient(&clientPtr);
+			break;
+		case 2:
+			printClientInfo(myClient);
+
+			//printClientInfo(clientPtr);
+			break;
+		default:
+			cout << "Such option does not exist." << endl;
+			break;
+		}
+
+
+		cin >> exitChoice;
+		if (exitChoice == 'y') { exit = true; }
+		system("cls");
+	} while (exit != true);
+
+	return 0;
+}
+
+void createClient(Client client) {
+	cout << "Name: ";
+	cin >> client.name;
+	cout << "Address: ";
+	cin >> client.address;
+}
+void createClient(Client* client) {
+	cout << "Name: ";
+	cin >> client->name;
+	cout << "Address: ";
+	cin >> client->address;
+}
+void createClient(Client* clientArr, size_t tableSize) {
+
+}
+void createClient(Client** client) {
+
+}
+void createClient(Client** clientArr, size_t tableSize) {
+
+}
+
+void printClientInfo(Client client) {
+	cout << "Name: " << client.name << endl << "Address: " << client.address;
+}
+void printClientInfo(Client* client) {
+	cout << "Name: " << client->name << endl << "Address: " << client->address;
+}

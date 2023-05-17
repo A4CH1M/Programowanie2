@@ -1,0 +1,5 @@
+﻿  client_c.cpp
+  menu.cpp
+  Generowanie kodu...
+c:\users\usr\source\repos\programowanie2\semestralprojectexercise5\client_c.cpp(115): warning C4715: "Client::operator=”: niewszystkie ścieżki kodu zwracają wartość
+  SemestralProjectExercise5.vcxproj -> C:\Users\Usr\source\repos\Programowanie2\x64\Debug\SemestralProjectExercise5.exe
